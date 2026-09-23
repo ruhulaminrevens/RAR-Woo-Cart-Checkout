@@ -1,0 +1,90 @@
+name: Build Installable Plugin ZIP
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "rar-woo-cart-checkout.php"
+      - "includes/**"
+      - "assets/**"
+      - "readme.txt"
+      - "README.md"
+      - "CHANGELOG.md"
+      - "ATTRIBUTION.md"
+      - "uninstall.php"
+      - ".github/workflows/build-release-zip.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(grep -m1 -E '^ \* Version:' rar-woo-cart-checkout.php | sed -E 's/.*Version:[[:space:]]*//')"
+          test -n "$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Validate PHP
+        shell: bash
+        run: |
+          find . -type f -name '*.php' -not -path './.git/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Validate JavaScript
+        shell: bash
+        run: |
+          node --check assets/js/address.js
+          node --check assets/js/express.js
+
+      - name: Validate Bangladesh data
+        shell: bash
+        run: |
+          python -m json.tool assets/data/bd-cities.json >/dev/null
+
+      - name: Build WordPress installable ZIP
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          PKG="rar-woo-cart-checkout"
+          OUT="RAR-Woo-Cart-Checkout-v${VERSION}.zip"
+
+          rm -rf build
+          mkdir -p "build/${PKG}" releases
+
+          cp -R assets "build/${PKG}/"
+          cp -R includes "build/${PKG}/"
+          cp rar-woo-cart-checkout.php "build/${PKG}/"
+          cp readme.txt README.md CHANGELOG.md ATTRIBUTION.md uninstall.php "build/${PKG}/"
+
+          (
+            cd build
+            zip -qr "../releases/${OUT}" "${PKG}"
+          )
+
+          unzip -t "releases/${OUT}"
+
+      - name: Commit refreshed ZIP
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          OUT="releases/RAR-Woo-Cart-Checkout-v${VERSION}.zip"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT"
+
+          if git diff --cached --quiet; then
+            echo "Installable ZIP is already current."
+            exit 0
+          fi
+
+          git commit -m "release: build installable ZIP v${VERSION}"
+          git push
