@@ -12,6 +12,7 @@ on:
       - "CHANGELOG.md"
       - "ATTRIBUTION.md"
       - "uninstall.php"
+      - "languages/**"
       - ".github/workflows/build-release-zip.yml"
   workflow_dispatch:
 
@@ -24,6 +25,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up PHP 8.0 (minimum supported)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+          tools: none
 
       - name: Resolve version
         id: version
@@ -41,8 +48,7 @@ jobs:
       - name: Validate JavaScript
         shell: bash
         run: |
-          node --check assets/js/address.js
-          node --check assets/js/express.js
+          for f in assets/js/*.js assets/admin/*.js; do node --check "$f"; done
 
       - name: Validate Bangladesh data
         shell: bash
@@ -61,6 +67,7 @@ jobs:
 
           cp -R assets "build/${PKG}/"
           cp -R includes "build/${PKG}/"
+          cp -R languages "build/${PKG}/"
           cp rar-woo-cart-checkout.php "build/${PKG}/"
           cp readme.txt README.md CHANGELOG.md ATTRIBUTION.md uninstall.php "build/${PKG}/"
 
