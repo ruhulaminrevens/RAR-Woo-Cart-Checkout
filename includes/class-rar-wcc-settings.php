@@ -1,52 +1,173 @@
 <?php
+/**
+ * Settings registry: schema, defaults, getters and sanitisation.
+ *
+ * @package RAR_Woo_Cart_Checkout
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class RAR_WCC_Settings {
+
 	public const OPTION = 'rar_wcc_settings';
 
 	private static $settings = null;
+	private static $schema   = null;
 
-	public static function defaults() {
+	/**
+	 * Tabs shown on the settings screen.
+	 */
+	public static function tabs() {
 		return array(
-			'address_enabled'            => 'yes',
-			'cart_address_enabled'       => 'yes',
-			'hide_country'               => 'yes',
-			'remove_optional_fields'     => 'yes',
-			'hide_ship_different'        => 'yes',
-			'show_order_notes'           => 'yes',
-			'searchable_city'            => 'yes',
-			'billing_heading'            => 'Billing Details',
-			'label_full_name'            => 'Full name',
-			'label_phone'                => 'Phone',
-			'label_email'                => 'Email address',
-			'label_street'               => 'Street address',
-			'label_city'                 => 'Town / City',
-			'label_district'             => 'District',
-			'city_placeholder'           => 'Search town / city…',
-			'additional_heading'         => 'Additional Information',
-			'order_notes_label'          => 'Order notes',
-			'express_enabled'            => 'yes',
-			'express_button_selector'    => '.wd-buy-now-btn',
-			'express_modal_title'        => 'Express Checkout',
-			'express_modal_subtitle'     => 'Fast & secure checkout',
-			'express_footer_text'        => 'Cash on Delivery · Nationwide Delivery',
-			'express_open_full_text'     => 'Open full checkout',
-			'express_loading_text'       => 'Preparing…',
-			'express_loader_text'        => 'Preparing secure checkout…',
-			'express_checkout_path'      => '/checkout/',
-			'express_delivery_heading'   => 'Delivery Information',
-			'express_order_heading'      => 'Order Summary',
-			'express_hide_additional'    => 'yes',
-			'express_hide_account'       => 'yes',
-			'express_primary_color'      => '#117865',
+			'address'    => array( __( 'Address & Fields', 'rar-woo-cart-checkout' ), 'dashicons-location' ),
+			'express'    => array( __( 'Express Buy Now', 'rar-woo-cart-checkout' ), 'dashicons-performance' ),
+			'checkout'   => array( __( 'Cart & Checkout', 'rar-woo-cart-checkout' ), 'dashicons-cart' ),
+			'guard'      => array( __( 'Order Protection', 'rar-woo-cart-checkout' ), 'dashicons-shield' ),
+			'incomplete' => array( __( 'Incomplete Orders', 'rar-woo-cart-checkout' ), 'dashicons-phone' ),
+			'advanced'   => array( __( 'Advanced', 'rar-woo-cart-checkout' ), 'dashicons-admin-tools' ),
 		);
 	}
 
-	public static function init() {
-		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ), 60 );
-		add_action( 'admin_post_rar_wcc_save_settings', array( __CLASS__, 'save' ) );
+	/**
+	 * Full settings schema. Each field: tab, group, type, default, label, desc, [options], [min], [max].
+	 */
+	public static function schema() {
+		if ( null !== self::$schema ) {
+			return self::$schema;
+		}
+
+		$s = array();
+
+		// ── Address & Fields ───────────────────────────────────────────────
+		$g = __( 'Bangladesh address workflow', 'rar-woo-cart-checkout' );
+		$s['address_enabled']        = array( 'address', $g, 'toggle', 'yes', __( 'Checkout address UX', 'rar-woo-cart-checkout' ), __( 'Streamlined Bangladesh billing fields on the checkout page.', 'rar-woo-cart-checkout' ) );
+		$s['cart_address_enabled']   = array( 'address', $g, 'toggle', 'yes', __( 'Cart shipping calculator UX', 'rar-woo-cart-checkout' ), __( 'District-aware Town / City selector in the Cart shipping calculator.', 'rar-woo-cart-checkout' ) );
+		$s['hide_country']           = array( 'address', $g, 'toggle', 'yes', __( 'Bangladesh-only country', 'rar-woo-cart-checkout' ), __( 'Keeps Bangladesh selected internally and hides the Country field.', 'rar-woo-cart-checkout' ) );
+		$s['remove_optional_fields'] = array( 'address', $g, 'toggle', 'yes', __( 'Remove unused fields', 'rar-woo-cart-checkout' ), __( 'Removes Last name, Company, Address line 2 and Postcode.', 'rar-woo-cart-checkout' ) );
+		$s['hide_ship_different']    = array( 'address', $g, 'toggle', 'yes', __( 'Hide “Ship to a different address?”', 'rar-woo-cart-checkout' ), __( 'The billing address is used as the delivery address.', 'rar-woo-cart-checkout' ) );
+		$s['show_order_notes']       = array( 'address', $g, 'toggle', 'yes', __( 'Show Order notes', 'rar-woo-cart-checkout' ), __( 'Keeps the Additional Information / Order notes box on the normal checkout page.', 'rar-woo-cart-checkout' ) );
+		$s['email_optional']         = array( 'address', $g, 'toggle', 'yes', __( 'Email is optional', 'rar-woo-cart-checkout' ), __( 'Most Bangladeshi COD shoppers skip email. Customers can still enter one for order updates.', 'rar-woo-cart-checkout' ) );
+		$s['field_order']            = array( 'address', $g, 'select', 'phone_first', __( 'Field order', 'rar-woo-cart-checkout' ), __( 'Which field the customer sees first.', 'rar-woo-cart-checkout' ), array( 'name_first' => __( 'Name → Phone → Email → Address → City → District', 'rar-woo-cart-checkout' ), 'phone_first' => __( 'Name → Phone → District → Town/City → Address → Email', 'rar-woo-cart-checkout' ) ) );
+
+		$g = __( 'Phone number', 'rar-woo-cart-checkout' );
+		$s['phone_validation']  = array( 'address', $g, 'toggle', 'yes', __( 'Validate Bangladeshi mobile number', 'rar-woo-cart-checkout' ), __( 'Accepts 01XXXXXXXXX, +8801XXXXXXXXX, 8801…, spaces, dashes and Bangla digits (০-৯). Rejects invalid numbers before the order is placed.', 'rar-woo-cart-checkout' ) );
+		$s['phone_normalize']   = array( 'address', $g, 'select', 'local', __( 'Save phone as', 'rar-woo-cart-checkout' ), __( 'Consistent formatting makes courier booking and customer history lookups reliable.', 'rar-woo-cart-checkout' ), array( 'local' => '01XXXXXXXXX', 'intl' => '+8801XXXXXXXXX', 'none' => __( 'As typed', 'rar-woo-cart-checkout' ) ) );
+		$s['phone_operator_hint'] = array( 'address', $g, 'toggle', 'yes', __( 'Live operator hint', 'rar-woo-cart-checkout' ), __( 'Shows “✓ Grameenphone”, “✓ Robi”… under the phone field while typing, or a warning when the number looks wrong.', 'rar-woo-cart-checkout' ) );
+
+		$g = __( 'Town / City selector', 'rar-woo-cart-checkout' );
+		$s['searchable_city']   = array( 'address', $g, 'toggle', 'yes', __( 'Searchable Town / City', 'rar-woo-cart-checkout' ), __( 'Turns Town / City into a searchable list filtered by the selected District.', 'rar-woo-cart-checkout' ) );
+		$s['city_allow_custom'] = array( 'address', $g, 'toggle', 'yes', __( 'Allow typing an unlisted area', 'rar-woo-cart-checkout' ), __( 'Customers can type their own area/thana if it is not in the list.', 'rar-woo-cart-checkout' ) );
+		$s['city_validation']   = array( 'address', $g, 'toggle', 'no', __( 'Strict Town / City validation', 'rar-woo-cart-checkout' ), __( 'Rejects a Town / City that does not belong to the selected District (ignored when unlisted areas are allowed).', 'rar-woo-cart-checkout' ) );
+		$s['metro_areas']       = array( 'address', $g, 'toggle', 'yes', __( 'Include Dhaka & Chattogram metro thanas', 'rar-woo-cart-checkout' ), __( 'Adds Mirpur, Uttara, Dhanmondi, Gulshan, Panchlaish, Double Mooring… so couriers get an exact area.', 'rar-woo-cart-checkout' ) );
+		$s['custom_locations']  = array( 'address', $g, 'textarea', '', __( 'Extra areas', 'rar-woo-cart-checkout' ), __( 'One district per line: District: Area 1, Area 2 (example — Dhaka: Aftabnagar, Bashundhara R/A).', 'rar-woo-cart-checkout' ) );
+
+		$g = __( 'Labels & placeholders', 'rar-woo-cart-checkout' );
+		$s['billing_heading']    = array( 'address', $g, 'text', 'Billing Details', __( 'Billing section heading', 'rar-woo-cart-checkout' ) );
+		$s['label_full_name']    = array( 'address', $g, 'text', 'Full name', __( 'Full name label', 'rar-woo-cart-checkout' ) );
+		$s['name_placeholder']   = array( 'address', $g, 'text', 'Enter your full name', __( 'Full name placeholder', 'rar-woo-cart-checkout' ) );
+		$s['label_phone']        = array( 'address', $g, 'text', 'Phone', __( 'Phone label', 'rar-woo-cart-checkout' ) );
+		$s['phone_placeholder']  = array( 'address', $g, 'text', '01XXXXXXXXX', __( 'Phone placeholder', 'rar-woo-cart-checkout' ) );
+		$s['label_email']        = array( 'address', $g, 'text', 'Email address', __( 'Email label', 'rar-woo-cart-checkout' ) );
+		$s['label_street']       = array( 'address', $g, 'text', 'Street address', __( 'Street address label', 'rar-woo-cart-checkout' ) );
+		$s['street_placeholder'] = array( 'address', $g, 'text', 'House / Road / Area', __( 'Street address placeholder', 'rar-woo-cart-checkout' ) );
+		$s['label_city']         = array( 'address', $g, 'text', 'Town / City', __( 'Town / City label', 'rar-woo-cart-checkout' ) );
+		$s['label_district']     = array( 'address', $g, 'text', 'District', __( 'District label', 'rar-woo-cart-checkout' ) );
+		$s['city_placeholder']   = array( 'address', $g, 'text', 'Search town / city…', __( 'Town / City search placeholder', 'rar-woo-cart-checkout' ) );
+		$s['additional_heading'] = array( 'address', $g, 'text', 'Additional Information', __( 'Additional Information heading', 'rar-woo-cart-checkout' ) );
+		$s['order_notes_label']  = array( 'address', $g, 'text', 'Order notes', __( 'Order notes label', 'rar-woo-cart-checkout' ) );
+
+		// ── Express Buy Now ───────────────────────────────────────────────
+		$g = __( 'Behaviour', 'rar-woo-cart-checkout' );
+		$s['express_enabled']       = array( 'express', $g, 'toggle', 'yes', __( 'Express Buy Now modal', 'rar-woo-cart-checkout' ), __( 'Buy Now adds the product in the background and opens a compact checkout in a modal. Unsupported products fall back to the theme behaviour.', 'rar-woo-cart-checkout' ) );
+		$s['express_button_selector'] = array( 'express', $g, 'text', '.wd-buy-now-btn', __( 'Theme Buy Now selector', 'rar-woo-cart-checkout' ), __( 'CSS selector of your theme’s Buy Now button. Woodmart: .wd-buy-now-btn', 'rar-woo-cart-checkout' ) );
+		$s['express_add_button']    = array( 'express', $g, 'toggle', 'no', __( 'Add our own Buy Now button', 'rar-woo-cart-checkout' ), __( 'For themes without a Buy Now button. Adds one next to Add to cart on product pages.', 'rar-woo-cart-checkout' ) );
+		$s['express_button_text']   = array( 'express', $g, 'text', 'Buy Now', __( 'Our Buy Now button text', 'rar-woo-cart-checkout' ) );
+		$s['express_clear_cart']    = array( 'express', $g, 'select', 'keep', __( 'Cart handling', 'rar-woo-cart-checkout' ), __( 'What happens to products already in the cart when the customer taps Buy Now.', 'rar-woo-cart-checkout' ), array( 'keep' => __( 'Keep them (buy everything together)', 'rar-woo-cart-checkout' ), 'clear' => __( 'Buy only this product (empty the cart first)', 'rar-woo-cart-checkout' ) ) );
+		$s['express_checkout_path'] = array( 'express', $g, 'text', '', __( 'Checkout path override', 'rar-woo-cart-checkout' ), __( 'Leave empty to use the WooCommerce checkout page automatically. Otherwise a same-site path such as /checkout/.', 'rar-woo-cart-checkout' ) );
+
+		$g = __( 'Modal content', 'rar-woo-cart-checkout' );
+		$s['express_modal_title']      = array( 'express', $g, 'text', 'Express Checkout', __( 'Modal title', 'rar-woo-cart-checkout' ) );
+		$s['express_modal_subtitle']   = array( 'express', $g, 'text', 'Fast & secure checkout', __( 'Modal subtitle', 'rar-woo-cart-checkout' ) );
+		$s['express_footer_text']      = array( 'express', $g, 'text', 'Cash on Delivery · Nationwide Delivery', __( 'Footer text', 'rar-woo-cart-checkout' ) );
+		$s['express_open_full_text']   = array( 'express', $g, 'text', 'Open full checkout', __( 'Open-full-checkout link text', 'rar-woo-cart-checkout' ) );
+		$s['express_loading_text']     = array( 'express', $g, 'text', 'Preparing…', __( 'Button loading text', 'rar-woo-cart-checkout' ) );
+		$s['express_loader_text']      = array( 'express', $g, 'text', 'Preparing secure checkout…', __( 'Modal loader text', 'rar-woo-cart-checkout' ) );
+		$s['express_delivery_heading'] = array( 'express', $g, 'text', 'Delivery Information', __( 'Billing heading inside modal', 'rar-woo-cart-checkout' ) );
+		$s['express_order_heading']    = array( 'express', $g, 'text', 'Order Summary', __( 'Order heading inside modal', 'rar-woo-cart-checkout' ) );
+		$s['express_hide_additional']  = array( 'express', $g, 'toggle', 'yes', __( 'Hide Order notes inside modal', 'rar-woo-cart-checkout' ) );
+		$s['express_hide_account']     = array( 'express', $g, 'toggle', 'yes', __( 'Hide account / shipping extras inside modal', 'rar-woo-cart-checkout' ) );
+		$s['express_hide_coupon']      = array( 'express', $g, 'toggle', 'no', __( 'Hide coupon box inside modal', 'rar-woo-cart-checkout' ) );
+		$s['express_primary_color']    = array( 'express', $g, 'color', '#117865', __( 'Primary colour', 'rar-woo-cart-checkout' ), __( 'Used for the modal, Place Order button, progress bars and quantity controls.', 'rar-woo-cart-checkout' ) );
+
+		// ── Cart & Checkout ───────────────────────────────────────────────
+		$g = __( 'Checkout experience', 'rar-woo-cart-checkout' );
+		$s['qty_editor']        = array( 'checkout', $g, 'toggle', 'yes', __( 'Edit quantity on checkout', 'rar-woo-cart-checkout' ), __( 'Adds − / + and remove controls to each product in the order summary (checkout page and Express modal).', 'rar-woo-cart-checkout' ) );
+		$s['place_order_text']  = array( 'checkout', $g, 'text', '', __( 'Place Order button text', 'rar-woo-cart-checkout' ), __( 'Leave empty for the default. Use {total} to show the order total, e.g. “Confirm Order · {total}”.', 'rar-woo-cart-checkout' ) );
+		$s['trust_enabled']     = array( 'checkout', $g, 'toggle', 'yes', __( 'Trust line under Place Order', 'rar-woo-cart-checkout' ) );
+		$s['trust_text']        = array( 'checkout', $g, 'text', '✓ Cash on Delivery  ✓ 100% Authentic  ✓ Easy Return', __( 'Trust line text', 'rar-woo-cart-checkout' ) );
+		$s['coupon_label']      = array( 'checkout', $g, 'text', '', __( 'Coupon toggle text', 'rar-woo-cart-checkout' ), __( 'Replaces “Have a coupon? Click here to enter your code”. Leave empty for default.', 'rar-woo-cart-checkout' ) );
+
+		$g = __( 'Free-delivery progress bar', 'rar-woo-cart-checkout' );
+		$s['fs_enabled']   = array( 'checkout', $g, 'toggle', 'yes', __( 'Show free-delivery progress', 'rar-woo-cart-checkout' ), __( 'Shown in Cart totals, Checkout summary, Express modal and mini-cart. Hidden automatically if no threshold exists.', 'rar-woo-cart-checkout' ) );
+		$s['fs_amount']    = array( 'checkout', $g, 'number', '0', __( 'Threshold amount', 'rar-woo-cart-checkout' ), __( '0 = detect automatically from your WooCommerce “Free shipping” method (minimum order amount).', 'rar-woo-cart-checkout' ), null, 0 );
+		$s['fs_text']      = array( 'checkout', $g, 'text', 'Add {amount} more to get FREE delivery!', __( 'Progress text', 'rar-woo-cart-checkout' ), __( '{amount} = remaining amount.', 'rar-woo-cart-checkout' ) );
+		$s['fs_unlock_mode'] = array( 'checkout', $g, 'select', 'select', __( 'When free delivery is unlocked', 'rar-woo-cart-checkout' ), __( 'WooCommerce keeps the paid rate selected by default, which confuses customers who just unlocked free delivery.', 'rar-woo-cart-checkout' ), array( 'select' => __( 'Pre-select free delivery (customer can still change)', 'rar-woo-cart-checkout' ), 'hide' => __( 'Hide paid delivery options', 'rar-woo-cart-checkout' ), 'none' => __( 'Do nothing', 'rar-woo-cart-checkout' ) ) );
+		$s['fs_done_text'] = array( 'checkout', $g, 'text', '🎉 You’ve unlocked FREE delivery!', __( 'Unlocked text', 'rar-woo-cart-checkout' ) );
+
+		// ── Order Protection ──────────────────────────────────────────────
+		$g = __( 'Customer insight', 'rar-woo-cart-checkout' );
+		$s['history_enabled'] = array( 'guard', $g, 'toggle', 'yes', __( 'Customer order history', 'rar-woo-cart-checkout' ), __( 'Shows each customer’s previous orders, delivered/cancelled counts and success rate (matched by phone) on the order screen and orders list.', 'rar-woo-cart-checkout' ) );
+		$s['history_column']  = array( 'guard', $g, 'toggle', 'yes', __( 'Success-rate column in Orders list', 'rar-woo-cart-checkout' ) );
+
+		$g = __( 'Blocking rules', 'rar-woo-cart-checkout' );
+		$s['guard_enabled']   = array( 'guard', $g, 'toggle', 'yes', __( 'Enable order protection', 'rar-woo-cart-checkout' ), __( 'Master switch for the rules below.', 'rar-woo-cart-checkout' ) );
+		$s['guard_cooldown']  = array( 'guard', $g, 'number', '0', __( 'Duplicate-order cooldown (minutes)', 'rar-woo-cart-checkout' ), __( 'Block a new order from the same phone within this many minutes. Stops double-submits and prank repeats. 0 = off.', 'rar-woo-cart-checkout' ), null, 0, 1440 );
+		$s['guard_min_total'] = array( 'guard', $g, 'number', '0', __( 'Minimum order total', 'rar-woo-cart-checkout' ), __( '0 = off.', 'rar-woo-cart-checkout' ), null, 0 );
+		$s['guard_max_cod']   = array( 'guard', $g, 'number', '0', __( 'Maximum Cash-on-Delivery total', 'rar-woo-cart-checkout' ), __( 'Larger COD orders must use an online payment method. 0 = off.', 'rar-woo-cart-checkout' ), null, 0 );
+		$s['guard_min_success'] = array( 'guard', $g, 'number', '0', __( 'Minimum success rate for COD (%)', 'rar-woo-cart-checkout' ), __( 'Customers with at least 3 finished orders and a lower delivery success rate cannot use COD. 0 = off.', 'rar-woo-cart-checkout' ), null, 0, 100 );
+		$s['guard_blocklist'] = array( 'guard', $g, 'textarea', '', __( 'Blocked phones / emails / IPs', 'rar-woo-cart-checkout' ), __( 'One per line. Phones are matched in any format. Tip: use “Block this customer” on an order screen.', 'rar-woo-cart-checkout' ) );
+		$s['guard_message']   = array( 'guard', $g, 'text', 'Sorry, we could not place this order. Please call us to complete your order.', __( 'Blocked-order message', 'rar-woo-cart-checkout' ) );
+		$s['guard_cooldown_message'] = array( 'guard', $g, 'text', 'You placed an order a few minutes ago. We will call you shortly to confirm it.', __( 'Cooldown message', 'rar-woo-cart-checkout' ) );
+
+		// ── Incomplete Orders ─────────────────────────────────────────────
+		$g = __( 'Capture', 'rar-woo-cart-checkout' );
+		$s['incomplete_enabled']   = array( 'incomplete', $g, 'toggle', 'yes', __( 'Capture incomplete checkouts', 'rar-woo-cart-checkout' ), __( 'When a shopper enters a valid phone number but leaves without ordering, their details and cart are saved so your team can call them.', 'rar-woo-cart-checkout' ) );
+		$s['incomplete_retention'] = array( 'incomplete', $g, 'number', '60', __( 'Keep records for (days)', 'rar-woo-cart-checkout' ), __( 'Older records are deleted automatically every day.', 'rar-woo-cart-checkout' ), null, 1, 730 );
+		$s['incomplete_whatsapp']  = array( 'incomplete', $g, 'textarea', "Assalamu Alaikum {name}, you were ordering {products} from {site}. Shall we confirm your order?", __( 'WhatsApp message template', 'rar-woo-cart-checkout' ), __( 'Used by the WhatsApp button. Placeholders: {name} {products} {total} {site}.', 'rar-woo-cart-checkout' ) );
+		$s['incomplete_order_status'] = array( 'incomplete', $g, 'select', 'pending', __( 'Status for recovered orders', 'rar-woo-cart-checkout' ), __( 'Status of an order created with “Create order” from an incomplete record.', 'rar-woo-cart-checkout' ), array( 'pending' => __( 'Pending payment', 'rar-woo-cart-checkout' ), 'on-hold' => __( 'On hold', 'rar-woo-cart-checkout' ), 'processing' => __( 'Processing', 'rar-woo-cart-checkout' ) ) );
+
+		// ── Advanced ──────────────────────────────────────────────────────
+		$g = __( 'Advanced', 'rar-woo-cart-checkout' );
+		$s['block_notice']     = array( 'advanced', $g, 'toggle', 'yes', __( 'Warn when Cart/Checkout Blocks are used', 'rar-woo-cart-checkout' ), __( 'This plugin works on the Classic cart/checkout. The dashboard offers a one-click, reversible switch.', 'rar-woo-cart-checkout' ) );
+		$s['delete_on_uninstall'] = array( 'advanced', $g, 'toggle', 'no', __( 'Delete all plugin data on uninstall', 'rar-woo-cart-checkout' ), __( 'Removes settings and the incomplete-orders table when the plugin is deleted. Orders are never touched.', 'rar-woo-cart-checkout' ) );
+
+		$out = array();
+		foreach ( $s as $key => $f ) {
+			$out[ $key ] = array(
+				'tab'     => $f[0],
+				'group'   => $f[1],
+				'type'    => $f[2],
+				'default' => $f[3],
+				'label'   => $f[4],
+				'desc'    => $f[5] ?? '',
+				'options' => $f[6] ?? null,
+				'min'     => $f[7] ?? null,
+				'max'     => $f[8] ?? null,
+			);
+		}
+
+		self::$schema = apply_filters( 'rar_wcc_settings_schema', $out );
+		return self::$schema;
+	}
+
+	public static function defaults() {
+		$d = array();
+		foreach ( self::schema() as $key => $f ) {
+			$d[ $key ] = $f['default'];
+		}
+		return $d;
 	}
 
 	public static function all() {
@@ -62,207 +183,140 @@ class RAR_WCC_Settings {
 		return array_key_exists( $key, $settings ) ? $settings[ $key ] : $default;
 	}
 
+	/**
+	 * Get a text setting, falling back to its default when blank.
+	 */
+	public static function text( $key ) {
+		$v = trim( (string) self::get( $key ) );
+		if ( '' === $v ) {
+			$schema = self::schema();
+			$v      = isset( $schema[ $key ] ) ? (string) $schema[ $key ]['default'] : '';
+		}
+		return $v;
+	}
+
 	public static function yes( $key ) {
 		return 'yes' === self::get( $key, 'no' );
 	}
 
-	public static function admin_menu() {
-		add_submenu_page(
-			'woocommerce',
-			__( 'RAR Cart & Checkout', 'rar-woo-cart-checkout' ),
-			__( 'RAR Cart & Checkout', 'rar-woo-cart-checkout' ),
-			'manage_woocommerce',
-			'rar-wcc',
-			array( __CLASS__, 'page' )
-		);
+	public static function num( $key ) {
+		return (float) self::get( $key, 0 );
 	}
 
-	private static function sanitize_checkbox( $value ) {
-		return 'yes' === $value ? 'yes' : 'no';
+	public static function reset_cache() {
+		self::$settings = null;
 	}
 
-	private static function sanitize_path( $value ) {
-		$value = trim( wp_unslash( (string) $value ) );
+	/**
+	 * Sanitise an array of raw values against the schema.
+	 *
+	 * @param array $raw     Raw input (already unslashed).
+	 * @param bool  $partial When true, only keys present in $raw are changed.
+	 */
+	public static function sanitize( $raw, $partial = false ) {
+		$schema = self::schema();
+		$clean  = $partial ? self::all() : self::defaults();
+
+		foreach ( $schema as $key => $f ) {
+			if ( $partial && ! array_key_exists( $key, $raw ) ) {
+				continue;
+			}
+			$v = $raw[ $key ] ?? null;
+
+			switch ( $f['type'] ) {
+				case 'toggle':
+					$clean[ $key ] = ( 'yes' === $v || true === $v || '1' === $v ) ? 'yes' : 'no';
+					break;
+				case 'number':
+					$n = is_numeric( $v ) ? (float) $v : (float) $f['default'];
+					if ( null !== $f['min'] ) {
+						$n = max( (float) $f['min'], $n );
+					}
+					if ( null !== $f['max'] ) {
+						$n = min( (float) $f['max'], $n );
+					}
+					$clean[ $key ] = (string) ( floor( $n ) == $n ? (int) $n : $n ); // phpcs:ignore Universal.Operators.StrictComparisons
+					break;
+				case 'color':
+					$c             = sanitize_hex_color( (string) $v );
+					$clean[ $key ] = $c ? $c : $f['default'];
+					break;
+				case 'select':
+					$clean[ $key ] = ( is_array( $f['options'] ) && array_key_exists( (string) $v, $f['options'] ) ) ? (string) $v : $f['default'];
+					break;
+				case 'textarea':
+					$clean[ $key ] = sanitize_textarea_field( (string) $v );
+					break;
+				default:
+					$clean[ $key ] = sanitize_text_field( (string) ( $v ?? $f['default'] ) );
+			}
+		}
+
+		$clean['express_button_selector'] = self::sanitize_selector( $clean['express_button_selector'] );
+		$clean['express_checkout_path']   = self::sanitize_path( $clean['express_checkout_path'] );
+
+		return $clean;
+	}
+
+	public static function save( $values ) {
+		update_option( self::OPTION, $values, false );
+		self::$settings = null;
+		do_action( 'rar_wcc_settings_saved', $values );
+	}
+
+	public static function sanitize_path( $value ) {
+		$value = trim( (string) $value );
 		if ( '' === $value ) {
-			return '/checkout/';
+			return '';
 		}
 		$parts = wp_parse_url( $value );
-		if ( false === $parts || isset( $parts['scheme'] ) || isset( $parts['host'] ) ) {
-			return '/checkout/';
-		}
-		if ( '/' !== substr( $value, 0, 1 ) ) {
-			$value = '/' . $value;
+		if ( false === $parts || isset( $parts['scheme'] ) || isset( $parts['host'] ) || str_starts_with( $value, '//' ) ) {
+			return '';
 		}
 		return '/' . ltrim( sanitize_text_field( $value ), '/' );
 	}
 
-	private static function sanitize_selector( $value ) {
-		$value = trim( wp_unslash( (string) $value ) );
-		$value = preg_replace( '/[^a-zA-Z0-9\-\_\.\#\[\]\=\"\'\:\s>,+~*()]/', '', $value );
+	public static function sanitize_selector( $value ) {
+		$value = trim( (string) $value );
+		$value = preg_replace( '/[^a-zA-Z0-9\-\_\.\#\[\]\=\"\'\:\s>,+~*()^$|]/', '', $value );
 		return $value ? $value : '.wd-buy-now-btn';
 	}
 
-	public static function save() {
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( esc_html__( 'You are not allowed to manage these settings.', 'rar-woo-cart-checkout' ) );
-		}
-		check_admin_referer( 'rar_wcc_save_settings' );
-
-		$raw      = isset( $_POST['rar_wcc'] ) && is_array( $_POST['rar_wcc'] ) ? wp_unslash( $_POST['rar_wcc'] ) : array();
-		$defaults = self::defaults();
-		$clean    = $defaults;
-
-		$checkboxes = array(
-			'address_enabled',
-			'cart_address_enabled',
-			'hide_country',
-			'remove_optional_fields',
-			'hide_ship_different',
-			'show_order_notes',
-			'searchable_city',
-			'express_enabled',
-			'express_hide_additional',
-			'express_hide_account',
+	/**
+	 * Bangla label preset applied from the Tools screen.
+	 */
+	public static function bangla_preset() {
+		return array(
+			'billing_heading'          => 'ডেলিভারি তথ্য',
+			'label_full_name'          => 'আপনার নাম',
+			'name_placeholder'         => 'আপনার পুরো নাম লিখুন',
+			'label_phone'              => 'মোবাইল নম্বর',
+			'phone_placeholder'        => '01XXXXXXXXX',
+			'label_email'              => 'ইমেইল',
+			'label_street'             => 'সম্পূর্ণ ঠিকানা',
+			'street_placeholder'       => 'বাসা / রোড / এলাকা',
+			'label_city'               => 'থানা / উপজেলা',
+			'label_district'           => 'জেলা',
+			'city_placeholder'         => 'থানা / উপজেলা খুঁজুন…',
+			'additional_heading'       => 'অতিরিক্ত তথ্য',
+			'order_notes_label'        => 'অর্ডার নোট',
+			'express_modal_title'      => 'দ্রুত অর্ডার করুন',
+			'express_modal_subtitle'   => 'নিরাপদ ও দ্রুত চেকআউট',
+			'express_footer_text'      => 'ক্যাশ অন ডেলিভারি · সারাদেশে ডেলিভারি',
+			'express_open_full_text'   => 'সম্পূর্ণ চেকআউট পেজ',
+			'express_loading_text'     => 'অপেক্ষা করুন…',
+			'express_loader_text'      => 'চেকআউট প্রস্তুত হচ্ছে…',
+			'express_delivery_heading' => 'ডেলিভারি তথ্য',
+			'express_order_heading'    => 'অর্ডার সারাংশ',
+			'express_button_text'      => 'এখনই কিনুন',
+			'place_order_text'         => 'অর্ডার কনফার্ম করুন · {total}',
+			'trust_text'               => '✓ ক্যাশ অন ডেলিভারি  ✓ ১০০% অরিজিনাল  ✓ সহজ রিটার্ন',
+			'coupon_label'             => 'কুপন কোড আছে? এখানে ক্লিক করুন',
+			'fs_text'                  => 'আর {amount} কেনাকাটা করলেই ফ্রি ডেলিভারি!',
+			'fs_done_text'             => '🎉 অভিনন্দন! আপনি ফ্রি ডেলিভারি পাচ্ছেন!',
+			'guard_message'            => 'দুঃখিত, এই অর্ডারটি সম্পন্ন করা যাচ্ছে না। অর্ডার করতে অনুগ্রহ করে আমাদের কল করুন।',
+			'guard_cooldown_message'   => 'আপনি কিছুক্ষণ আগেই অর্ডার করেছেন। আমরা শীঘ্রই আপনাকে কল করে কনফার্ম করবো।',
+			'incomplete_whatsapp'      => 'আসসালামু আলাইকুম {name}, আপনি {site} থেকে {products} অর্ডার করছিলেন। অর্ডারটি কি কনফার্ম করে দেবো?',
 		);
-		foreach ( $checkboxes as $key ) {
-			$clean[ $key ] = self::sanitize_checkbox( $raw[ $key ] ?? 'no' );
-		}
-
-		$text_keys = array(
-			'billing_heading',
-			'label_full_name',
-			'label_phone',
-			'label_email',
-			'label_street',
-			'label_city',
-			'label_district',
-			'city_placeholder',
-			'additional_heading',
-			'order_notes_label',
-			'express_modal_title',
-			'express_modal_subtitle',
-			'express_footer_text',
-			'express_open_full_text',
-			'express_loading_text',
-			'express_loader_text',
-			'express_delivery_heading',
-			'express_order_heading',
-		);
-		foreach ( $text_keys as $key ) {
-			$clean[ $key ] = sanitize_text_field( $raw[ $key ] ?? $defaults[ $key ] );
-		}
-
-		$clean['express_button_selector'] = self::sanitize_selector( $raw['express_button_selector'] ?? $defaults['express_button_selector'] );
-		$clean['express_checkout_path']   = self::sanitize_path( $raw['express_checkout_path'] ?? $defaults['express_checkout_path'] );
-		$color                            = sanitize_hex_color( $raw['express_primary_color'] ?? $defaults['express_primary_color'] );
-		$clean['express_primary_color']   = $color ? $color : $defaults['express_primary_color'];
-
-		update_option( self::OPTION, $clean, false );
-		self::$settings = $clean;
-
-		wp_safe_redirect( add_query_arg( array( 'page' => 'rar-wcc', 'updated' => '1' ), admin_url( 'admin.php' ) ) );
-		exit;
-	}
-
-	private static function checked( $key ) {
-		checked( self::yes( $key ), true );
-	}
-
-	private static function field( $key, $label, $description = '' ) {
-		$value = self::get( $key );
-		echo '<tr><th scope="row"><label for="rar-wcc-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label></th><td>';
-		echo '<input class="regular-text" type="text" id="rar-wcc-' . esc_attr( $key ) . '" name="rar_wcc[' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '">';
-		if ( $description ) {
-			echo '<p class="description">' . esc_html( $description ) . '</p>';
-		}
-		echo '</td></tr>';
-	}
-
-	private static function toggle( $key, $label, $description = '' ) {
-		echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td><label>';
-		echo '<input type="checkbox" name="rar_wcc[' . esc_attr( $key ) . ']" value="yes" ';
-		self::checked( $key );
-		echo '> ' . esc_html__( 'Enabled', 'rar-woo-cart-checkout' ) . '</label>';
-		if ( $description ) {
-			echo '<p class="description">' . esc_html( $description ) . '</p>';
-		}
-		echo '</td></tr>';
-	}
-
-	public static function page() {
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			return;
-		}
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'RAR Woo Cart & Checkout', 'rar-woo-cart-checkout' ); ?></h1>
-			<?php if ( isset( $_GET['updated'] ) ) : ?>
-				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved.', 'rar-woo-cart-checkout' ); ?></p></div>
-			<?php endif; ?>
-
-			<div class="notice notice-info inline">
-				<p><strong><?php esc_html_e( 'Safe WPCode migration:', 'rar-woo-cart-checkout' ); ?></strong>
-				<?php esc_html_e( 'Activate this plugin first. Then deactivate the old checkout/address and Express Buy Now WPCode snippets. Clear caches and test Cart, Checkout, Buy Now, variation products and Place Order before deleting the old snippets.', 'rar-woo-cart-checkout' ); ?></p>
-			</div>
-
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-				<input type="hidden" name="action" value="rar_wcc_save_settings">
-				<?php wp_nonce_field( 'rar_wcc_save_settings' ); ?>
-
-				<h2><?php esc_html_e( 'Bangladesh Address UX', 'rar-woo-cart-checkout' ); ?></h2>
-				<table class="form-table" role="presentation">
-					<?php
-					self::toggle( 'address_enabled', 'Checkout billing UX', 'Controls the streamlined Bangladesh checkout fields.' );
-					self::toggle( 'cart_address_enabled', 'Cart shipping calculator UX', 'Applies the Bangladesh Town/City selector to the Cart shipping calculator.' );
-					self::toggle( 'hide_country', 'Bangladesh-only country', 'Keeps Bangladesh internally selected and hides the country field.' );
-					self::toggle( 'remove_optional_fields', 'Remove unused billing fields', 'Removes last name, company, address line 2 and postcode from checkout.' );
-					self::toggle( 'hide_ship_different', 'Hide “Ship to a different address?”', 'Billing address remains the delivery address.' );
-					self::toggle( 'show_order_notes', 'Show Additional Information / Order notes', 'Keeps the order-notes textarea visible.' );
-					self::toggle( 'searchable_city', 'Searchable Town / City', 'Converts Town / City into a district-aware searchable selector.' );
-					self::field( 'billing_heading', 'Billing heading' );
-					self::field( 'label_full_name', 'Full-name label' );
-					self::field( 'label_phone', 'Phone label' );
-					self::field( 'label_email', 'Email label' );
-					self::field( 'label_street', 'Street-address label' );
-					self::field( 'label_city', 'Town / City label' );
-					self::field( 'label_district', 'District label' );
-					self::field( 'city_placeholder', 'Town / City search placeholder' );
-					self::field( 'additional_heading', 'Additional Information heading' );
-					self::field( 'order_notes_label', 'Order notes label' );
-					?>
-				</table>
-
-				<hr>
-				<h2><?php esc_html_e( 'Express Buy Now', 'rar-woo-cart-checkout' ); ?></h2>
-				<table class="form-table" role="presentation">
-					<?php
-					self::toggle( 'express_enabled', 'Express Buy Now modal', 'Intercepts the configured Buy Now button and opens checkout in a same-origin modal. Unsupported product types fall back to the theme behavior.' );
-					self::field( 'express_button_selector', 'Buy Now CSS selector', 'Default Woodmart selector: .wd-buy-now-btn' );
-					self::field( 'express_checkout_path', 'Checkout path', 'Must be a same-site relative path such as /checkout/.' );
-					self::field( 'express_modal_title', 'Modal title' );
-					self::field( 'express_modal_subtitle', 'Modal subtitle' );
-					self::field( 'express_footer_text', 'Modal footer text' );
-					self::field( 'express_open_full_text', 'Open-full-checkout link text' );
-					self::field( 'express_loading_text', 'Buy Now loading text' );
-					self::field( 'express_loader_text', 'Modal loader text' );
-					self::field( 'express_delivery_heading', 'Express billing heading' );
-					self::field( 'express_order_heading', 'Express order-summary heading' );
-					self::toggle( 'express_hide_additional', 'Hide Additional Information inside Express modal', 'The normal checkout page can still show Order notes.' );
-					self::toggle( 'express_hide_account', 'Hide account/shipping extras inside Express modal' );
-					?>
-					<tr>
-						<th scope="row"><label for="rar-wcc-color"><?php esc_html_e( 'Primary color', 'rar-woo-cart-checkout' ); ?></label></th>
-						<td><input type="color" id="rar-wcc-color" name="rar_wcc[express_primary_color]" value="<?php echo esc_attr( self::get( 'express_primary_color', '#117865' ) ); ?>"></td>
-					</tr>
-				</table>
-
-				<?php submit_button( __( 'Save Settings', 'rar-woo-cart-checkout' ) ); ?>
-			</form>
-
-			<hr>
-			<h2><?php esc_html_e( 'Compatibility notes', 'rar-woo-cart-checkout' ); ?></h2>
-			<p><?php esc_html_e( 'Version 1.0.0 is designed for WooCommerce Classic Cart/Checkout templates. HPOS is supported. The Express Buy Now feature is theme-agnostic at the plugin level, but its default selector targets Woodmart’s .wd-buy-now-btn button and can be edited above.', 'rar-woo-cart-checkout' ); ?></p>
-		</div>
-		<?php
 	}
 }

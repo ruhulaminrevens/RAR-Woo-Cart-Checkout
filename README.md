@@ -1,136 +1,93 @@
 # RAR Woo Cart & Checkout
 
-A production-focused WooCommerce cart and checkout UX plugin that consolidates two previously separate customizations into one manageable plugin:
+**Bangladesh-first WooCommerce cart & checkout suite** — smart address fields, BD mobile validation, Express Buy Now modal, incomplete-order recovery, fraud/duplicate protection, customer success-rate insight, free-delivery progress, checkout quantity editing, a live dashboard and a REST API for staff apps.
 
-1. **Bangladesh Address UX** — streamlined billing fields, Bangladesh-only country handling, searchable district-aware Town/City selection, Cart shipping calculator integration, and configurable Order Notes.
-2. **Express Buy Now** — a compact same-origin checkout modal for supported Buy Now buttons with safe fallback to the theme’s native behavior.
+Built for [nabiad.com](https://www.nabiad.com/) (Woodmart theme, Cash-on-Delivery, nationwide delivery) and works with any classic WooCommerce theme.
 
 ## Download
 
-⬇️ **[Download Latest Installable ZIP](https://raw.githubusercontent.com/ruhulaminrevens/RAR-Woo-Cart-Checkout/main/releases/RAR-Woo-Cart-Checkout-v1.0.0.zip)**
-
-Current stable version: **v1.0.0**
-
-### Install
+⬇️ **[Download installable ZIP v2.0.0](https://raw.githubusercontent.com/ruhulaminrevens/RAR-Woo-Cart-Checkout/main/releases/RAR-Woo-Cart-Checkout-v2.0.0.zip)**
 
 `WordPress → Plugins → Add New → Upload Plugin → choose ZIP → Install Now → Activate`
 
-Then open:
+Upgrading from v1.0.0: upload the new ZIP and choose **Replace current with uploaded**. Settings are kept.
 
-`WooCommerce → RAR Cart & Checkout`
+Then open **RAR Checkout** in the admin menu.
 
-## Main features
+---
 
-### Bangladesh Address UX
-- Keeps Bangladesh selected internally and can hide Country / Region.
-- Full name, Phone, Email, Street address, Town / City and District layout.
-- Optional removal of Last name, Company, Address line 2 and Postcode.
-- District-aware searchable Town / City selector.
-- 64-district / 559-location dataset.
-- Searchable Town / City on Checkout and Cart shipping calculator.
-- Optional hiding of “Ship to a different address?”.
-- Additional Information / Order notes can remain visible.
-- Labels and headings are editable from the admin panel.
+## What's inside
 
-### Express Buy Now
-- Default compatibility with Woodmart `.wd-buy-now-btn`.
-- Buy Now button selector can be edited from admin.
-- Same-origin checkout modal.
-- Product is submitted through the original WooCommerce product form.
-- Variation validation is respected.
-- External and grouped products fall back to the theme behavior.
-- Full checkout remains available as a fallback link.
-- Modal text, headings, color and behavior are configurable.
-- Normal checkout and Express checkout can use different Additional Information visibility.
+### 📊 Dashboard (RAR Checkout → Dashboard)
+- Orders today / 30 days, Express Buy Now orders & share, recovered orders, open-cart value, recovery rate, blocked attempts.
+- 14-day chart: orders, Express, recovered, incomplete checkouts.
+- **“Call these customers”** list with one-tap Call / WhatsApp.
+- **Health check with one-click fixes**: Blocks → Classic checkout switch (reversible), duplicate WPCode snippets, COD status, theme/Buy Now selector, free-delivery threshold, cron.
 
-## Admin controls
+### 📍 Bangladesh address & phone
+- Bangladesh-only country, Full-name/Phone/District/Town/Address layout, optional email.
+- Searchable **District → Town/City** selector (64 districts, 630+ areas incl. Dhaka & Chattogram metro thanas).
+- Customers can type an unlisted area; admins can add extra areas per district.
+- **BD mobile validation**: accepts `01…`, `+880…`, spaces/dashes and **Bangla digits (০-৯)**; saves a clean `01XXXXXXXXX` (or `+880…`).
+- Live operator hint (“✓ Grameenphone”, “✓ Robi”…).
+- Optional strict “Town must belong to District” validation.
+- Labels keep working after WooCommerce’s address script re-renders (v1 bug fixed).
+- One-click **Bangla label preset**.
 
-`WooCommerce → RAR Cart & Checkout`
+### ⚡ Express Buy Now
+- Adds the product **in the background** (AJAX) then opens checkout in a modal — no more empty-cart race.
+- Works with Woodmart `.wd-buy-now-btn`, any custom selector, or **our own Buy Now button** for other themes.
+- Variations, quantity and product add-on fields are submitted; double-tap doesn’t double quantity.
+- Option: **buy only this product** (clear cart first).
+- After ordering — including online gateways (bKash/Nagad/SSLCommerz) — the customer lands on the real thank-you/payment page, not inside the modal.
+- Mobile full-screen sheet, focus trap, Esc to close, slow-network fallback, retry on error.
+- Orders are tagged **Express** and shown with ⚡ in the Orders list.
 
-You can enable/disable and edit:
-- Checkout billing UX
-- Cart shipping calculator UX
-- Bangladesh-only country behavior
-- Optional field removal
-- Ship-to-different-address visibility
-- Order Notes visibility
-- Searchable Town / City
-- Checkout field labels/headings
-- Express Buy Now
-- Buy Now selector
-- Checkout path
-- Modal title/subtitle/footer
-- Express checkout headings
-- Express modal Additional Information visibility
-- Primary color
+### 🛒 Cart & checkout boosters
+- − / + / remove controls in the checkout order summary (and in the modal).
+- **Free-delivery progress bar** (auto-detects your Free-shipping minimum) in Cart, Checkout, modal and mini-cart; free delivery is **pre-selected** the moment it unlocks.
+- Custom Place-Order text with live `{total}`, trust line, custom coupon text.
 
-## Safe migration from WPCode
+### 📞 Incomplete-order recovery
+- Captures name, phone, address, district/city and cart as soon as a **valid phone** is typed.
+- Staff list with statuses (New, Contacted, Call back, Recovered, Ordered by customer, Not interested, Spam), notes, search, filters, CSV export (Excel-safe Bangla).
+- **Create order in one click** from a record.
+- Records close automatically when the customer orders (Contacted → *Recovered*).
+- Pre-filled WhatsApp message template; auto-delete after N days.
 
-If these features are currently running as WPCode snippets:
+### 🛡️ Order protection & customer insight
+- **Customer Insight** box on every order: total/delivered/cancelled, success rate, risk label, previous orders, Call/WhatsApp, **Block/Unblock**.
+- **Customer score** column in Orders list.
+- Rules: blocklist (phone/email/IP with wildcards), duplicate-order cooldown, minimum order, max COD total, minimum success rate for COD.
+- Recent blocked attempts on the dashboard.
 
-1. Install and **activate this plugin first**.
-2. Open `WooCommerce → RAR Cart & Checkout` and confirm both required modules are enabled.
-3. Deactivate the old **Checkout / Bangladesh Address UX** WPCode snippet.
-4. Deactivate the old **Express Buy Now** WPCode snippet.
-5. Clear page/cache/CDN caches.
-6. Test:
-   - Cart shipping calculator
-   - Checkout address fields
-   - District → Town / City search
-   - Additional Information / Order notes
-   - Product Buy Now modal
-   - Simple product
-   - Variable product
-   - Place Order and order-received redirect
-7. Only after successful testing, delete the old WPCode snippets.
+### 🔌 REST API (`/wp-json/rar-wcc/v1`)
+Use with Application Passwords (e.g. from the RAR Woo Stock & Order staff app).
 
-The plugin includes a migration guard for the old Express Buy Now browser script to reduce duplicate event handlers during the transition. The old PHP checkout snippet should still be disabled immediately after activating this plugin to avoid duplicate WooCommerce filters.
+| Method | Route | Purpose |
+|---|---|---|
+| GET | `/stats` | Dashboard numbers & 14-day series |
+| GET | `/incomplete?status=open&search=&page=` | List incomplete checkouts |
+| GET/POST/DELETE | `/incomplete/{id}` | Read, update `status`/`admin_note`, delete |
+| POST | `/incomplete/{id}/order` | Create a WooCommerce order |
+| GET | `/customer?phone=01…` | Customer history & risk |
+| POST | `/customer/block` | Block/unblock a phone |
 
-## Compatibility
+### 🧩 Developer hooks
+`rar_wcc_loaded`, `rar_wcc_guard_validate( $errors, $data )`, `rar_wcc_incomplete_captured`, `rar_wcc_incomplete_status_changed`, `rar_wcc_incomplete_order_created`, `rar_wcc_settings_saved`; filters `rar_wcc_city_map`, `rar_wcc_free_shipping_threshold`, `rar_wcc_success_statuses`, `rar_wcc_failed_statuses`, `rar_wcc_settings_schema`.
 
-- WordPress 6.5+
-- PHP 8.0+
-- WooCommerce 8.5+
-- Tested target: WooCommerce 11.1.x
-- HPOS compatible
-- **Classic Cart / Checkout** supported
-- WooCommerce Cart/Checkout Blocks are not declared compatible in v1.0.0
-- Express Buy Now default selector targets Woodmart but can be edited for another theme
+---
 
-## Data attribution
+## Requirements
+- WordPress 6.5+, PHP 8.0+, WooCommerce 8.5+ (tested to 10.2).
+- **Classic** Cart & Checkout (the dashboard switches Blocks → Classic in one click, reversible).
+- HPOS and legacy order storage both supported.
 
-The Bangladesh administrative Town/City dataset was carried over from the existing implementation and is attributed to:
+## Migrating from WPCode snippets
+Activate the plugin, then deactivate the old checkout/address and Express Buy Now snippets. The Health check lists any snippet that still looks active.
 
-`open-admin-data/bangladesh-administrative-divisions` — CC BY 4.0.
+## Privacy
+Incomplete-checkout data is collected only after a valid phone number is typed, stays in your database (`wp_rar_wcc_incomplete`), and is auto-deleted after the retention period. Mention order follow-up calls in your privacy policy.
 
-See `ATTRIBUTION.md`.
-
-## Repository structure
-
-```text
-assets/
-  css/
-    address.css
-    express.css
-  data/
-    bd-cities.json
-  js/
-    address.js
-    express.js
-includes/
-  class-rar-wcc-address.php
-  class-rar-wcc-express.php
-  class-rar-wcc-settings.php
-rar-woo-cart-checkout.php
-README.md
-readme.txt
-CHANGELOG.md
-ATTRIBUTION.md
-uninstall.php
-releases/
-  RAR-Woo-Cart-Checkout-v1.0.0.zip
-```
-
-## Safety
-
-The plugin does not change order/payment data and does not delete WooCommerce data. Disabling either module from the admin panel restores WooCommerce/theme behavior for that module. Uninstall intentionally preserves the plugin settings option so an accidental uninstall/reinstall does not erase configuration.
+## License
+GPLv2 or later. Location dataset: see [ATTRIBUTION.md](ATTRIBUTION.md).

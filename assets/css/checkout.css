@@ -1,0 +1,20 @@
+/* RAR Woo Cart & Checkout — quantity editor, free-delivery bar, trust line */
+:root{--rar-wcc-primary:#117865}
+.rar-wcc-qty{display:inline-flex;align-items:center;gap:4px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.rar-wcc-qty-btn,.rar-wcc-qty-remove{width:26px;height:26px;min-height:0!important;padding:0!important;border:1px solid #d7e1dc!important;border-radius:8px!important;background:#fff!important;color:#23312b!important;font-size:15px!important;font-weight:700;line-height:1!important;cursor:pointer;display:inline-grid;place-items:center;transition:background .15s,border-color .15s;box-shadow:none!important}
+.rar-wcc-qty-btn:hover:not(:disabled){border-color:var(--rar-wcc-primary)!important;color:var(--rar-wcc-primary)!important}
+.rar-wcc-qty-btn:disabled{opacity:.4;cursor:not-allowed}
+.rar-wcc-qty-remove{border-color:transparent!important;color:#9aa6a0!important;margin-left:2px}
+.rar-wcc-qty-remove:hover{color:#dc2626!important;background:#fef2f2!important}
+.rar-wcc-qty-val{min-width:20px;text-align:center;font-weight:700;font-size:14px}
+.rar-wcc-busy{opacity:.55;pointer-events:none;transition:opacity .15s}
+.rar-wcc-fs-row td{padding:10px 0!important;border:0!important}
+.rar-wcc-fs{margin:4px 0 10px;padding:10px 12px;border-radius:12px;background:#f0f8f5;border:1px solid #cfe7df}
+.rar-wcc-fs-text{font-size:13px;line-height:1.4;margin-bottom:7px;color:#1f2d27;font-weight:600}
+.rar-wcc-fs-text .amount{color:var(--rar-wcc-primary);font-weight:800}
+.rar-wcc-fs-track{height:8px;border-radius:99px;background:#e3ebe7;overflow:hidden}
+.rar-wcc-fs-track span{display:block;height:100%;border-radius:99px;background:var(--rar-wcc-primary);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.rar-wcc-fs.is-done{background:#ecfdf5;border-color:#a7f3d0}
+.rar-wcc-fs.is-done .rar-wcc-fs-track span{background:#10b981}
+.widget_shopping_cart .rar-wcc-fs{margin:10px 0}
+.rar-wcc-trust{clear:both;margin:10px 0 0!important;text-align:center;font-size:12.5px;color:#4b5b54;line-height:1.6}

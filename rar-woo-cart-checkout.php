@@ -1,36 +1,38 @@
 <?php
 /**
- * Plugin Name: RAR Woo Cart & Checkout
- * Plugin URI: https://github.com/ruhulaminrevens/RAR-Woo-Cart-Checkout
- * Description: WooCommerce cart and checkout UX toolkit with Bangladesh address fields, searchable Town/City selection, and an optional Express Buy Now checkout modal.
- * Version: 1.0.0
- * Author: Ruhul Amin Revens
- * Text Domain: rar-woo-cart-checkout
+ * Plugin Name:       RAR Woo Cart & Checkout
+ * Plugin URI:        https://github.com/ruhulaminrevens/RAR-Woo-Cart-Checkout
+ * Description:       Bangladesh-first WooCommerce cart & checkout suite: smart address fields, BD phone validation, Express Buy Now modal, incomplete-order recovery, fraud/duplicate order protection, customer order history, free-shipping progress, checkout quantity editing, dashboard and REST API.
+ * Version:           2.0.0
+ * Author:            Ruhul Amin Revens
+ * Author URI:        https://www.nabiad.com/
+ * Text Domain:       rar-woo-cart-checkout
+ * Domain Path:       /languages
+ * License:           GPLv2 or later
  * Requires at least: 6.5
- * Requires PHP: 8.0
+ * Requires PHP:      8.0
+ * Requires Plugins:  woocommerce
  * WC requires at least: 8.5
- * WC tested up to: 11.1
+ * WC tested up to:   10.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RAR_WCC_VERSION', '1.0.0' );
+define( 'RAR_WCC_VERSION', '2.0.0' );
+define( 'RAR_WCC_DB_VERSION', '2.0.0' );
 define( 'RAR_WCC_FILE', __FILE__ );
 define( 'RAR_WCC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RAR_WCC_URL', plugin_dir_url( __FILE__ ) );
+define( 'RAR_WCC_BASENAME', plugin_basename( __FILE__ ) );
 
 require_once RAR_WCC_DIR . 'includes/class-rar-wcc-settings.php';
+require_once RAR_WCC_DIR . 'includes/class-rar-wcc-phone.php';
+require_once RAR_WCC_DIR . 'includes/class-rar-wcc-install.php';
 
-register_activation_hook(
-	__FILE__,
-	static function () {
-		if ( false === get_option( RAR_WCC_Settings::OPTION ) ) {
-			add_option( RAR_WCC_Settings::OPTION, RAR_WCC_Settings::defaults(), '', false );
-		}
-	}
-);
+register_activation_hook( __FILE__, array( 'RAR_WCC_Install', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'RAR_WCC_Install', 'deactivate' ) );
 
 add_action(
 	'before_woocommerce_init',
@@ -45,34 +47,53 @@ add_action(
 add_action(
 	'plugins_loaded',
 	static function () {
-		RAR_WCC_Settings::init();
+		load_plugin_textdomain( 'rar-woo-cart-checkout', false, dirname( RAR_WCC_BASENAME ) . '/languages' );
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			add_action(
 				'admin_notices',
 				static function () {
 					if ( current_user_can( 'activate_plugins' ) ) {
-						echo '<div class="notice notice-error"><p><strong>RAR Woo Cart &amp; Checkout</strong> requires WooCommerce to be active.</p></div>';
+						echo '<div class="notice notice-error"><p><strong>RAR Woo Cart &amp; Checkout</strong> ' . esc_html__( 'requires WooCommerce to be installed and active.', 'rar-woo-cart-checkout' ) . '</p></div>';
 					}
 				}
 			);
 			return;
 		}
 
-		require_once RAR_WCC_DIR . 'includes/class-rar-wcc-address.php';
-		require_once RAR_WCC_DIR . 'includes/class-rar-wcc-express.php';
+		RAR_WCC_Install::maybe_upgrade();
+
+		$modules = array(
+			'class-rar-wcc-locations.php',
+			'class-rar-wcc-address.php',
+			'class-rar-wcc-express.php',
+			'class-rar-wcc-checkout.php',
+			'class-rar-wcc-guard.php',
+			'class-rar-wcc-incomplete.php',
+			'class-rar-wcc-stats.php',
+			'class-rar-wcc-rest.php',
+		);
+		foreach ( $modules as $file ) {
+			require_once RAR_WCC_DIR . 'includes/' . $file;
+		}
 
 		RAR_WCC_Address::init();
 		RAR_WCC_Express::init();
+		RAR_WCC_Checkout::init();
+		RAR_WCC_Guard::init();
+		RAR_WCC_Incomplete::init();
+		RAR_WCC_Rest::init();
+
+		if ( is_admin() ) {
+			require_once RAR_WCC_DIR . 'includes/admin/class-rar-wcc-admin.php';
+			require_once RAR_WCC_DIR . 'includes/admin/class-rar-wcc-incomplete-table.php';
+			RAR_WCC_Admin::init();
+		}
+
+		/**
+		 * Fires after all RAR Woo Cart & Checkout modules are loaded.
+		 */
+		do_action( 'rar_wcc_loaded' );
 	},
 	20
-);
-
-add_filter(
-	'plugin_action_links_' . plugin_basename( __FILE__ ),
-	static function ( $links ) {
-		$url = admin_url( 'admin.php?page=rar-wcc' );
-		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'rar-woo-cart-checkout' ) . '</a>' );
-		return $links;
-	}
 );

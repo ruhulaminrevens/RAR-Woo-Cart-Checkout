@@ -1,0 +1,1405 @@
+# Copyright (C) 2026 Ruhul Amin Revens
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: RAR Woo Cart & Checkout 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rar-woo-cart-checkout\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-25T18:58:06+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: rar-woo-cart-checkout\n"
+
+#. Plugin Name of the plugin
+#: rar-woo-cart-checkout.php
+msgid "RAR Woo Cart & Checkout"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: rar-woo-cart-checkout.php
+msgid "https://github.com/ruhulaminrevens/RAR-Woo-Cart-Checkout"
+msgstr ""
+
+#. Description of the plugin
+#: rar-woo-cart-checkout.php
+msgid "Bangladesh-first WooCommerce cart & checkout suite: smart address fields, BD phone validation, Express Buy Now modal, incomplete-order recovery, fraud/duplicate order protection, customer order history, free-shipping progress, checkout quantity editing, dashboard and REST API."
+msgstr ""
+
+#. Author of the plugin
+#: rar-woo-cart-checkout.php
+msgid "Ruhul Amin Revens"
+msgstr ""
+
+#. Author URI of the plugin
+#: rar-woo-cart-checkout.php
+msgid "https://www.nabiad.com/"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:38
+msgid "RAR Checkout"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:39
+#: includes/admin/class-rar-wcc-admin.php:77
+#: includes/admin/class-rar-wcc-admin.php:114
+#: includes/admin/class-rar-wcc-admin.php:187
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:40
+#: includes/admin/class-rar-wcc-admin.php:115
+#: includes/class-rar-wcc-settings.php:28
+msgid "Incomplete Orders"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:42
+#: includes/admin/class-rar-wcc-admin.php:78
+#: includes/admin/class-rar-wcc-admin.php:116
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:43
+#: includes/admin/class-rar-wcc-admin.php:117
+msgid "Tools & Status"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:99
+msgid "Note for this customer (visible to staff only):"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:100
+#: includes/admin/class-rar-wcc-incomplete-table.php:168
+msgid "+ Add note"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:101
+msgid "Saved"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:102
+msgid "Could not save. Please reload and try again."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:103
+msgid "You have unsaved changes."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:124
+msgid "RAR Cart & Checkout"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:125
+msgid "Bangladesh-first checkout, Express Buy Now, incomplete-order recovery & order protection."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:150
+msgid "Settings saved."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:151
+msgid "Settings imported."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:152
+msgid "Import failed: the text is not a valid settings export."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:153
+msgid "Settings reset to defaults."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:154
+msgid "Bangla labels applied. Review them under Settings."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:155
+msgid "English labels restored."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:156
+msgid "Cart & Checkout pages switched to the Classic shortcode. A backup of the block content was kept."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:157
+msgid "Original block Cart & Checkout content restored."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:158
+msgid "Caches cleared."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:159
+msgid "Maintenance finished."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:160
+msgid "Records updated."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:161
+msgid "Records deleted."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:162
+msgid "Could not create the order."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:191
+msgid "Orders today"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:192
+msgid "Orders · 30 days"
+msgstr ""
+
+#. translators: %s: percent
+#: includes/admin/class-rar-wcc-admin.php:194
+msgid "Express Buy Now · 30 days"
+msgstr ""
+
+#. translators: %s: percent
+#: includes/admin/class-rar-wcc-admin.php:194
+msgid "%s%% of orders"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:195
+#: includes/admin/class-rar-wcc-incomplete-table.php:72
+msgid "Needs follow-up"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:195
+msgid "in open carts"
+msgstr ""
+
+#. translators: 1: captured count
+#: includes/admin/class-rar-wcc-admin.php:197
+msgid "Recovery rate · 30 days"
+msgstr ""
+
+#. translators: 1: captured count
+#: includes/admin/class-rar-wcc-admin.php:197
+msgid "%1$d captured · %2$d recovered · %3$d self-ordered"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:198
+msgid "Recovered orders · 30 days"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:199
+msgid "Blocked attempts (all time)"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:199
+msgid "Blocklist, cooldown & COD rules"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:205
+msgid "Last 14 days"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:206
+msgid "Refresh"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:211
+msgid "Call these customers"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:212
+msgid "View all"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:221
+msgid "No pending follow-ups."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:229
+msgid "item(s)"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:243
+msgid "Health check"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:245
+msgid "Tools"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:251
+msgid "Recently blocked"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:253
+msgid "Nothing blocked yet."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:258
+msgid "Blocklist"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:259
+msgid "Duplicate within cooldown"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:260
+msgid "Above COD limit"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:261
+msgid "Low success rate"
+msgstr ""
+
+#. translators: %s: time
+#: includes/admin/class-rar-wcc-admin.php:273
+msgid "Figures cached for 10 minutes · generated %s ago · excludes failed and cancelled orders."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:309
+msgid "Orders and incomplete checkouts per day"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:337
+#: includes/class-rar-wcc-guard.php:353
+msgid "Orders"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:338
+#: includes/class-rar-wcc-guard.php:348
+#: includes/class-rar-wcc-guard.php:456
+#: includes/class-rar-wcc-settings.php:25
+msgid "Express Buy Now"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:339
+#: includes/class-rar-wcc-guard.php:348
+#: includes/class-rar-wcc-incomplete.php:19
+msgid "Recovered"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:340
+msgid "Incomplete checkouts"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:390
+msgid "Cart/Checkout uses WooCommerce Blocks — this plugin needs the Classic cart & checkout."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:390
+msgid "Classic Cart & Checkout in use."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:391
+msgid "Switch to Classic (reversible)"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:391
+msgid "Restore block version"
+msgstr ""
+
+#. translators: %s: snippet titles
+#: includes/admin/class-rar-wcc-admin.php:400
+msgid "Active WPCode snippet(s) may duplicate this plugin: %s. Deactivate them to avoid double modals or fields."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:401
+msgid "Open WPCode"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:408
+msgid "Cash on Delivery is enabled."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:408
+msgid "Cash on Delivery is not enabled."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:409
+msgid "Payments"
+msgstr ""
+
+#. translators: %s: theme name
+#: includes/admin/class-rar-wcc-admin.php:421
+msgid "Express Buy Now active (theme: %s)."
+msgstr ""
+
+#. translators: %s: theme name
+#: includes/admin/class-rar-wcc-admin.php:423
+msgid "Theme “%s” is not Woodmart — enable “Add our own Buy Now button” or set your theme’s selector."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:424
+msgid "Express settings"
+msgstr ""
+
+#. translators: %s: amount
+#: includes/admin/class-rar-wcc-admin.php:435
+msgid "Free-delivery progress bar threshold: %s."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:436
+msgid "Free-delivery bar is hidden: no “Free shipping” method with a minimum amount and no manual threshold."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:437
+msgid "Set threshold"
+msgstr ""
+
+#. translators: 1: districts, 2: areas
+#: includes/admin/class-rar-wcc-admin.php:444
+msgid "Location data: %1$d districts, %2$d towns/areas."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:449
+msgid "HPOS (High-Performance Order Storage) active and supported."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:449
+msgid "Legacy order storage in use (supported)."
+msgstr ""
+
+#. translators: %s: time
+#: includes/admin/class-rar-wcc-admin.php:456
+msgid "Daily cleanup scheduled (next run in %s)."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:457
+msgid "Daily cleanup is not scheduled."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:458
+msgid "Run now"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:494
+msgid "Replace the block Cart & Checkout with the Classic shortcode? The block version is backed up and can be restored."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:514
+msgid "your Cart/Checkout page uses WooCommerce Blocks, so Bangladesh fields, Express Buy Now and incomplete-order capture will not run there."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:514
+msgid "Fix it in one click →"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:561
+msgid "Privacy: data is captured only after a valid phone number is typed on checkout, stays on your server, is never shared, and is auto-deleted after the retention period. Consider mentioning order-follow-up calls in your privacy policy."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:567
+msgid "Unsaved changes"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:568
+msgid "Save Settings"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:614
+msgid "You are not allowed to manage these settings."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:641
+msgid "Capture is turned off. Existing records are shown, but new ones are not collected."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:641
+msgid "Turn on"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:643
+msgid "Shoppers who entered a phone number on checkout but did not order. Call or WhatsApp them, set a status, add notes, or create the order for them in one click. Records close automatically when the same customer orders."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:652
+msgid "Search name, phone, area"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:685
+#: includes/admin/class-rar-wcc-admin.php:710
+#: includes/admin/class-rar-wcc-admin.php:855
+#: includes/class-rar-wcc-guard.php:397
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:799
+msgid "System status"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:803
+msgid "Plugin"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:806
+msgid "Theme"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:807
+msgid "Checkout URL (Express)"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:814
+msgid "Labels"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:815
+msgid "Switch every customer-facing text to Bangla in one click, or back to English."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:817
+msgid "Replace current labels with Bangla?"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:818
+msgid "Restore English labels"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:818
+msgid "Replace current labels with English defaults?"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:823
+msgid "Maintenance"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:825
+msgid "Clear stats & customer-history cache"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:826
+msgid "Run cleanup now"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:828
+msgid "Reset all settings to defaults"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:828
+msgid "Reset ALL settings to defaults? This cannot be undone (export first)."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:832
+msgid "Export settings"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:834
+msgid "Copy"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:835
+msgid "Download .json"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:839
+msgid "Import settings"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-admin.php:845
+msgid "Import"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:33
+msgid "Customer"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:34
+msgid "Address"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:35
+msgid "Cart"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:36
+msgid "Status"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:37
+msgid "Last activity"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:38
+msgid "Actions"
+msgstr ""
+
+#. translators: %s: status label
+#: includes/admin/class-rar-wcc-incomplete-table.php:55
+msgid "Mark as: %s"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:58
+msgid "Export CSV"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:60
+msgid "Delete"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:71
+msgid "All"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:109
+msgid "No incomplete checkouts yet. They appear here as soon as a shopper types a valid phone number on checkout and leaves without ordering."
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:119
+msgid "(no name)"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:128
+msgid "Express"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:128
+#: includes/class-rar-wcc-guard.php:348
+msgid "Checkout"
+msgstr ""
+
+#. translators: %d: number of visits
+#: includes/admin/class-rar-wcc-incomplete-table.php:131
+msgid "%d update"
+msgid_plural "%d updates"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: human time diff
+#: includes/admin/class-rar-wcc-incomplete-table.php:175
+msgid "%s ago"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:182
+#: includes/class-rar-wcc-guard.php:383
+msgid "Call"
+msgstr ""
+
+#. translators: %s: order number
+#: includes/admin/class-rar-wcc-incomplete-table.php:189
+msgid "Order #%s"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:192
+msgid "Create a WooCommerce order from this record?"
+msgstr ""
+
+#: includes/admin/class-rar-wcc-incomplete-table.php:192
+msgid "Create order"
+msgstr ""
+
+#. translators: %s: field label
+#: includes/class-rar-wcc-address.php:184
+msgid "%s must be a valid Bangladeshi mobile number, e.g. 01712345678."
+msgstr ""
+
+#. translators: 1: city label, 2: district label
+#: includes/class-rar-wcc-address.php:198
+msgid "Please choose a %1$s that belongs to the selected %2$s."
+msgstr ""
+
+#: includes/class-rar-wcc-address.php:299
+msgid "Select town / city"
+msgstr ""
+
+#: includes/class-rar-wcc-address.php:300
+msgid "Select district first, or search all areas"
+msgstr ""
+
+#. translators: %s: text typed by the customer
+#: includes/class-rar-wcc-address.php:302
+msgid "Use “%s”"
+msgstr ""
+
+#: includes/class-rar-wcc-address.php:303
+msgid "Enter an 11-digit mobile number starting with 01"
+msgstr ""
+
+#: includes/class-rar-wcc-address.php:304
+msgid "Valid number"
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:80
+msgid "Decrease quantity"
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:82
+msgid "Increase quantity"
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:86
+msgid "Remove item"
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:86
+msgid "Remove"
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:99
+msgid "This item is no longer in your cart."
+msgstr ""
+
+#. translators: %d: maximum quantity
+#: includes/class-rar-wcc-checkout.php:105
+msgid "Only %d available."
+msgstr ""
+
+#: includes/class-rar-wcc-checkout.php:115
+msgid "Could not update quantity."
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:118
+msgid "Close checkout"
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:119
+#: includes/class-rar-wcc-express.php:221
+#: includes/class-rar-wcc-express.php:240
+msgid "Could not add this product. Please try again."
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:120
+msgid "Try again"
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:121
+msgid "Taking longer than usual…"
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:122
+#: includes/class-rar-wcc-express.php:198
+msgid "Please choose product options first."
+msgstr ""
+
+#: includes/class-rar-wcc-express.php:175
+msgid "Product not found."
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:161
+msgid "Blocked"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:165
+msgid "Returning (no delivered yet)"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:165
+msgid "New customer"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:168
+msgid "Trusted"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:171
+msgid "Watch"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:173
+msgid "High risk"
+msgstr ""
+
+#. translators: %s: minimum amount
+#: includes/class-rar-wcc-guard.php:271
+msgid "The minimum order amount is %s."
+msgstr ""
+
+#. translators: %s: maximum amount
+#: includes/class-rar-wcc-guard.php:279
+msgid "Cash on Delivery is available for orders up to %s. Please choose an online payment method."
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:305
+msgid "Cash on Delivery is not available for this number. Please choose an online payment method or call us."
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:326
+msgid "Customer Insight"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:338
+msgid "No phone number on this order."
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:354
+msgid "Delivered"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:355
+msgid "Cancelled"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:356
+msgid "Success"
+msgstr ""
+
+#. translators: %s: amount
+#: includes/class-rar-wcc-guard.php:364
+msgid "Lifetime delivered value: %s"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:387
+msgid "Unblock this customer?"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:387
+msgid "Block this phone number from placing new orders?"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:388
+msgid "Unblock"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:388
+msgid "Block"
+msgstr ""
+
+#. translators: %s: user name
+#: includes/class-rar-wcc-guard.php:407
+msgid "Customer phone blocked by %s (RAR Cart & Checkout)."
+msgstr ""
+
+#. translators: %s: user name
+#: includes/class-rar-wcc-guard.php:409
+msgid "Customer phone unblocked by %s (RAR Cart & Checkout)."
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:424
+#: includes/class-rar-wcc-guard.php:428
+msgid "Customer score"
+msgstr ""
+
+#. translators: 1: total orders, 2: delivered, 3: cancelled
+#: includes/class-rar-wcc-guard.php:454
+msgid "%1$d orders · %2$d delivered · %3$d cancelled"
+msgstr ""
+
+#: includes/class-rar-wcc-guard.php:456
+msgid "Recovered from incomplete"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:16
+msgid "New"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:17
+msgid "Contacted"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:18
+msgid "Call back later"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:20
+msgid "Ordered by customer"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:21
+msgid "Not interested"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:22
+msgid "Spam / fake"
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:290
+#: includes/class-rar-wcc-incomplete.php:334
+#: includes/class-rar-wcc-rest.php:81
+msgid "Record not found."
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:295
+msgid "Invalid status."
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:337
+msgid "An order already exists for this record."
+msgstr ""
+
+#: includes/class-rar-wcc-incomplete.php:340
+msgid "This record has no products."
+msgstr ""
+
+#. translators: 1: record id, 2: user name
+#: includes/class-rar-wcc-incomplete.php:392
+msgid "Created from incomplete checkout #%1$d by %2$s. Please verify shipping charge before confirming."
+msgstr ""
+
+#. translators: %s: product names
+#: includes/class-rar-wcc-incomplete.php:398
+msgid "Unavailable products skipped: %s."
+msgstr ""
+
+#: includes/class-rar-wcc-rest.php:140
+msgid "Phone is required."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:24
+msgid "Address & Fields"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:26
+msgid "Cart & Checkout"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:27
+msgid "Order Protection"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:29
+#: includes/class-rar-wcc-settings.php:142
+msgid "Advanced"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:44
+msgid "Bangladesh address workflow"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:45
+msgid "Checkout address UX"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:45
+msgid "Streamlined Bangladesh billing fields on the checkout page."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:46
+msgid "Cart shipping calculator UX"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:46
+msgid "District-aware Town / City selector in the Cart shipping calculator."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:47
+msgid "Bangladesh-only country"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:47
+msgid "Keeps Bangladesh selected internally and hides the Country field."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:48
+msgid "Remove unused fields"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:48
+msgid "Removes Last name, Company, Address line 2 and Postcode."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:49
+msgid "Hide “Ship to a different address?”"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:49
+msgid "The billing address is used as the delivery address."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:50
+msgid "Show Order notes"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:50
+msgid "Keeps the Additional Information / Order notes box on the normal checkout page."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:51
+msgid "Email is optional"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:51
+msgid "Most Bangladeshi COD shoppers skip email. Customers can still enter one for order updates."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:52
+msgid "Field order"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:52
+msgid "Which field the customer sees first."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:52
+msgid "Name → Phone → Email → Address → City → District"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:52
+msgid "Name → Phone → District → Town/City → Address → Email"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:54
+msgid "Phone number"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:55
+msgid "Validate Bangladeshi mobile number"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:55
+msgid "Accepts 01XXXXXXXXX, +8801XXXXXXXXX, 8801…, spaces, dashes and Bangla digits (০-৯). Rejects invalid numbers before the order is placed."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:56
+msgid "Save phone as"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:56
+msgid "Consistent formatting makes courier booking and customer history lookups reliable."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:56
+msgid "As typed"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:57
+msgid "Live operator hint"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:57
+msgid "Shows “✓ Grameenphone”, “✓ Robi”… under the phone field while typing, or a warning when the number looks wrong."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:59
+msgid "Town / City selector"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:60
+msgid "Searchable Town / City"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:60
+msgid "Turns Town / City into a searchable list filtered by the selected District."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:61
+msgid "Allow typing an unlisted area"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:61
+msgid "Customers can type their own area/thana if it is not in the list."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:62
+msgid "Strict Town / City validation"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:62
+msgid "Rejects a Town / City that does not belong to the selected District (ignored when unlisted areas are allowed)."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:63
+msgid "Include Dhaka & Chattogram metro thanas"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:63
+msgid "Adds Mirpur, Uttara, Dhanmondi, Gulshan, Panchlaish, Double Mooring… so couriers get an exact area."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:64
+msgid "Extra areas"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:64
+msgid "One district per line: District: Area 1, Area 2 (example — Dhaka: Aftabnagar, Bashundhara R/A)."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:66
+msgid "Labels & placeholders"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:67
+msgid "Billing section heading"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:68
+msgid "Full name label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:69
+msgid "Full name placeholder"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:70
+msgid "Phone label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:71
+msgid "Phone placeholder"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:72
+msgid "Email label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:73
+msgid "Street address label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:74
+msgid "Street address placeholder"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:75
+msgid "Town / City label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:76
+msgid "District label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:77
+msgid "Town / City search placeholder"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:78
+msgid "Additional Information heading"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:79
+msgid "Order notes label"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:82
+msgid "Behaviour"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:83
+msgid "Express Buy Now modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:83
+msgid "Buy Now adds the product in the background and opens a compact checkout in a modal. Unsupported products fall back to the theme behaviour."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:84
+msgid "Theme Buy Now selector"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:84
+msgid "CSS selector of your theme’s Buy Now button. Woodmart: .wd-buy-now-btn"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:85
+msgid "Add our own Buy Now button"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:85
+msgid "For themes without a Buy Now button. Adds one next to Add to cart on product pages."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:86
+msgid "Our Buy Now button text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:87
+msgid "Cart handling"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:87
+msgid "What happens to products already in the cart when the customer taps Buy Now."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:87
+msgid "Keep them (buy everything together)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:87
+msgid "Buy only this product (empty the cart first)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:88
+msgid "Checkout path override"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:88
+msgid "Leave empty to use the WooCommerce checkout page automatically. Otherwise a same-site path such as /checkout/."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:90
+msgid "Modal content"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:91
+msgid "Modal title"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:92
+msgid "Modal subtitle"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:93
+msgid "Footer text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:94
+msgid "Open-full-checkout link text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:95
+msgid "Button loading text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:96
+msgid "Modal loader text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:97
+msgid "Billing heading inside modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:98
+msgid "Order heading inside modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:99
+msgid "Hide Order notes inside modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:100
+msgid "Hide account / shipping extras inside modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:101
+msgid "Hide coupon box inside modal"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:102
+msgid "Primary colour"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:102
+msgid "Used for the modal, Place Order button, progress bars and quantity controls."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:105
+msgid "Checkout experience"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:106
+msgid "Edit quantity on checkout"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:106
+msgid "Adds − / + and remove controls to each product in the order summary (checkout page and Express modal)."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:107
+msgid "Place Order button text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:107
+msgid "Leave empty for the default. Use {total} to show the order total, e.g. “Confirm Order · {total}”."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:108
+msgid "Trust line under Place Order"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:109
+msgid "Trust line text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:110
+msgid "Coupon toggle text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:110
+msgid "Replaces “Have a coupon? Click here to enter your code”. Leave empty for default."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:112
+msgid "Free-delivery progress bar"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:113
+msgid "Show free-delivery progress"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:113
+msgid "Shown in Cart totals, Checkout summary, Express modal and mini-cart. Hidden automatically if no threshold exists."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:114
+msgid "Threshold amount"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:114
+msgid "0 = detect automatically from your WooCommerce “Free shipping” method (minimum order amount)."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:115
+msgid "Progress text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:115
+msgid "{amount} = remaining amount."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:116
+msgid "When free delivery is unlocked"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:116
+msgid "WooCommerce keeps the paid rate selected by default, which confuses customers who just unlocked free delivery."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:116
+msgid "Pre-select free delivery (customer can still change)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:116
+msgid "Hide paid delivery options"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:116
+msgid "Do nothing"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:117
+msgid "Unlocked text"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:120
+msgid "Customer insight"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:121
+msgid "Customer order history"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:121
+msgid "Shows each customer’s previous orders, delivered/cancelled counts and success rate (matched by phone) on the order screen and orders list."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:122
+msgid "Success-rate column in Orders list"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:124
+msgid "Blocking rules"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:125
+msgid "Enable order protection"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:125
+msgid "Master switch for the rules below."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:126
+msgid "Duplicate-order cooldown (minutes)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:126
+msgid "Block a new order from the same phone within this many minutes. Stops double-submits and prank repeats. 0 = off."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:127
+msgid "Minimum order total"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:127
+msgid "0 = off."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:128
+msgid "Maximum Cash-on-Delivery total"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:128
+msgid "Larger COD orders must use an online payment method. 0 = off."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:129
+msgid "Minimum success rate for COD (%)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:129
+msgid "Customers with at least 3 finished orders and a lower delivery success rate cannot use COD. 0 = off."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:130
+msgid "Blocked phones / emails / IPs"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:130
+msgid "One per line. Phones are matched in any format. Tip: use “Block this customer” on an order screen."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:131
+msgid "Blocked-order message"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:132
+msgid "Cooldown message"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:135
+msgid "Capture"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:136
+msgid "Capture incomplete checkouts"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:136
+msgid "When a shopper enters a valid phone number but leaves without ordering, their details and cart are saved so your team can call them."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:137
+msgid "Keep records for (days)"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:137
+msgid "Older records are deleted automatically every day."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:138
+msgid "WhatsApp message template"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:138
+msgid "Used by the WhatsApp button. Placeholders: {name} {products} {total} {site}."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:139
+msgid "Status for recovered orders"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:139
+msgid "Status of an order created with “Create order” from an incomplete record."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:139
+msgid "Pending payment"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:139
+msgid "On hold"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:139
+msgid "Processing"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:143
+msgid "Warn when Cart/Checkout Blocks are used"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:143
+msgid "This plugin works on the Classic cart/checkout. The dashboard offers a one-click, reversible switch."
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:144
+msgid "Delete all plugin data on uninstall"
+msgstr ""
+
+#: includes/class-rar-wcc-settings.php:144
+msgid "Removes settings and the incomplete-orders table when the plugin is deleted. Orders are never touched."
+msgstr ""
+
+#: rar-woo-cart-checkout.php:57
+msgid "requires WooCommerce to be installed and active."
+msgstr ""
